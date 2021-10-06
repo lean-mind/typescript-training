@@ -88,7 +88,6 @@ function add(x, y) {
   'a' + undefined
   true + true
 
-
 </Notes>
 
 <Logo/>
@@ -140,7 +139,7 @@ function add(x, y) {
   ```diff title="Tipos avanzados" 2:5[1:19]
   ```
 
-  ```diff title="Tipos avanzados" 5[19:24]
+  ```diff title="Tipos avanzados" 5[19:23]
   ```
 
 </CodeSurfer>
@@ -169,19 +168,23 @@ function add(x, y) {
 ## Genéricos
 
 ```typescript
-export interface UseCase<Input, Output> {
-exec(input: Input): Output
+    class Lista<T>{
+        private values: Array<T>
+    }
+
+    export interface UseCase<Input, Output> {
+        exec(input: Input): Output
+    }
 ```
 
 <Notes>
 
-  - Útil en el desarrollo
+  - Útil en el desarrollo, no existe/traspila en Javascript
   - Permite definir qué va a realizar un objeto sin saber cómo lo hará
-  - Evitar el uso de **any**, tipando los parámetros,
+  - Evita el uso de **any**, tipando los parámetros,
 
 </Notes>
 
-
 <Logo/>
 
 ---
@@ -194,21 +197,28 @@ exec(input: Input): Output
 
 ## Mejor gestión de la herencia
 
-```
-interface SpecificInvoice {
-  validInvoice(): boolean
+```typescript
+abstract class CustomerAbstractRepository {
+    read(): Customer[]
 }
 
-class SpecificInvoiceT implements SpecificInvoice {
-  validInvoice(): boolean {
-    return true}
-  }
+class CustomerRepository extends CustomerAbstractRepository {
+    write() {
+        ...write customers
+    }
+}
+
+class CustomerLegacyRepository extends CustomerAbstractRepository {
+    write() {
+        ...write customers at legacy repository
+    }
 }
 ```
-
 
 <Notes>
-
+    - Aprovecha la potencia de objetos
+    - Permite definir una API de comportamiento ocultando comportamiento interno
+    - Facilita compartir código entre entidades
 </Notes>
 
 <Logo/>
@@ -220,11 +230,22 @@ class SpecificInvoiceT implements SpecificInvoice {
 
 ### Mejora de la experiencia y reducción del costes de desarrollo
 
+<Notes>
+    - Bien aplicado reduce incertidumbre gracias al tipado y visibilidad de atributos/métodos/funciones
+    - Disminuye el tiempo necesario para tomar el control de código legacy o que hace tiempo que no se toca
+
+</Notes>
+
 <Logo/>
 
 ---
 
 ### Testeo estático
+
+
+<Notes>
+
+</Notes>
 
 <Logo/>
 
@@ -237,6 +258,11 @@ class SpecificInvoiceT implements SpecificInvoice {
 ---
 
 ### Aprovecha mejor las herramientas del IDE
+
+<Notes>
+    - Refactorizar código
+    - Inline variables
+</Notes>
 
 <Logo/>
 
