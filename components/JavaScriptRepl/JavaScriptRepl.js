@@ -48,8 +48,7 @@ function generateREPL() {
 export const JavaScriptRepl = ({
  title = 'REPL',
  loadToScope = [],
- init = [],
- height
+ init = []
 }) => {
   const repl = generateREPL()
   const initializeLines = () => {
