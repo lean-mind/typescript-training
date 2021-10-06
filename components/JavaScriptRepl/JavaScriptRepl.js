@@ -76,7 +76,6 @@ export const JavaScriptRepl = ({
     <Repl
       title={title}
       onSubmit={onSubmit}
-      height={init?.length > 0 ? 'auto' : height ?? 300}
       lines={lines}
       onClear={onClear}
     />

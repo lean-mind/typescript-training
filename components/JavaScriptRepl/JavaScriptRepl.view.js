@@ -4,26 +4,15 @@ import {FaUndo} from "react-icons/fa";
 
 // Forked from https://github.com/seveibar/react-repl
 const Container = styled.div`
-  body.theme-light & {
-    --repl-bg-color: #eae5e1;
-    --repl-caret-color: var(--secondary-color);
-    --repl-output-color: #939393;
-    --repl-tab-color: #f2f2f2;
-    --repl-title-color: #808080;
-  }
-
-  body.theme-dark & {
-    --repl-bg-color: #2d2d2d;
-    --repl-caret-color: var(--primary-color);
-    --repl-output-color: #808080;
-    --repl-tab-color: var(--black);
-    --repl-title-color: var(--text-color);
-  }
+  --repl-bg-color: #C3E7EC;
+  --repl-caret-color: #39B3C2;
+  --repl-output-color: #8e8e8e;
+  --repl-tab-color: #f2f2f2;
+  --repl-title-color: #808080;
 
   background-color: var(--repl-bg-color);
   border-radius: 4px;
-  box-shadow: 8px 0 8px rgba(0, 0, 0, 0.5);
-  color: var(--text-color);
+  color: #333;
   font-family: monospace;
   font-weight: bold;
   overflow: hidden;
@@ -56,7 +45,7 @@ const TextInput = styled.input`
   border: none;
   caret-color: var(--repl-caret-color);
   caret-shape: block;
-  color: var(--text-color);
+  color: #333;
   font-family: monospace;
   font-size: inherit;
   font-weight: bold;
@@ -86,8 +75,8 @@ const Tab = styled.div`
 const TerminalContent = styled.div`
   padding: 16px;
   padding-top: 2px;
-  height: ${({height}) => isNaN(Number(height)) ? height : `${height}px`};
-  overflow-y: auto;
+  max-height: 680px;
+  overflow-y: scroll;
 `
 
 const renderLine = (line, i) =>
@@ -107,7 +96,6 @@ export const Repl = ({
   onClear,
   onSubmit,
   lines,
-  height,
 }) => {
   const inputRef = useRef()
   const terminalContentRef = useRef()
@@ -152,7 +140,7 @@ export const Repl = ({
         <Title>{title}</Title>
         <Tab onClick={onClear}><FaUndo/></Tab>
       </Header>
-      <TerminalContent height={height} ref={terminalContentRef}>
+      <TerminalContent ref={terminalContentRef}>
         {lines.map(renderLine)}
         <ActiveInputLine>
           <InputCaret>{">"}</InputCaret>
