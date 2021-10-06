@@ -1,0 +1,262 @@
+import {CodeSurfer} from "code-surfer";
+import defaultTheme, {highlight} from 'mdx-deck/themes'
+import {Notes} from 'mdx-deck'
+
+import {Logo, JavaScriptRepl} from '../components'
+import tsLogo from '../assets/ts-logo.svg'
+
+export const theme = {
+  ...defaultTheme,
+  ...highlight
+}
+
+
+# Introducción a TypeScript
+
+<img src={tsLogo}/>
+
+<Logo/>
+
+---
+
+## ¿Qué es TypeScript?
+
+### Superset de JavaScript
+
+<Logo/>
+
+---
+
+## Tipos
+
+<Logo/>
+
+---
+
+<CodeSurfer>
+
+```js title="Declaración en JavaScript"
+function add(x, y) {
+  return x + y
+}
+```
+
+</CodeSurfer>
+
+<Logo/>
+
+---
+
+<JavaScriptRepl
+  init={[
+    "const zeroNumber = 1 - 1",
+    "zeroNumber + 1",
+    "Boolean(zeroNumber)",
+    "const zeroString = String(zeroNumber)",
+    "Boolean(zeroString)"
+  ]}
+/>
+
+<Logo/>
+
+---
+
+<CodeSurfer>
+
+  ```typescript title="Tipos"
+  function add(x: number, y: number): number {
+  return x + y
+}
+  ```
+
+  ```diff title="Tipos" 1[1:14,25:25,34:34,44],2:3
+  ```
+  ```diff title="Tipos" 1[1:14,25:25,34:34,44],2:3
+  ```
+
+</CodeSurfer>
+
+<Notes>
+
+  - ¿Qué hace esa función en JS?
+
+  - ¿Qué podría recibir de entrada?
+  'a' + 1
+  1 + 'a'
+  1 + 1
+  1 + undefined
+  'a' + undefined
+  true + true
+
+
+</Notes>
+
+<Logo/>
+
+---
+
+## Tipos avanzados
+
+
+<Logo/>
+
+---
+
+<CodeSurfer>
+
+  ```typescript title="Tipos avanzados"
+  interface Person {
+  id: string
+  name: string
+  age: number
+}
+  ```
+
+</CodeSurfer>
+
+<Logo/>
+
+---
+
+<CodeSurfer>
+
+  ```typescript title="Tipos avanzados"
+  function buildPerson({
+  id = '1',
+  name = 'Bruce Wayne',
+  age = 18
+}: Partial<Person> = {}): Person {
+  return {
+  id,
+  name,
+  age
+}
+}
+  ```
+
+  ```diff title="Tipos avanzados" 2:5
+  ```
+
+  ```diff title="Tipos avanzados" 2:5[1:19]
+  ```
+
+  ```diff title="Tipos avanzados" 5[19:24]
+  ```
+
+</CodeSurfer>
+
+<Notes>
+
+  - ¿Qué hace esta función?
+  - ¿Qué aporta la deconstrucción de parámetros?
+  - ¿Qué ventajas tiene llamar a una función con objetos en lugar de usasr sus parámetros por separado?
+  - ¿Qué pasaría al invocar la función con un objeto con solo el atributo name ?
+  - ¿Se puede llamar a la función sin parámetros?
+
+</Notes>
+
+<Logo/>
+
+---
+
+## Genéricos
+
+
+<Logo/>
+
+---
+
+## Genéricos
+
+```typescript
+export interface UseCase<Input, Output> {
+exec(input: Input): Output
+```
+
+<Notes>
+
+  - Útil en el desarrollo
+  - Permite definir qué va a realizar un objeto sin saber cómo lo hará
+  - Evitar el uso de **any**, tipando los parámetros,
+
+</Notes>
+
+
+<Logo/>
+
+---
+
+## Mejor gestión de la herencia
+
+<Logo/>
+
+---
+
+## Mejor gestión de la herencia
+
+```
+interface SpecificInvoice {
+  validInvoice(): boolean
+}
+
+class SpecificInvoiceT implements SpecificInvoice {
+  validInvoice(): boolean {
+    return true}
+  }
+}
+```
+
+
+<Notes>
+
+</Notes>
+
+<Logo/>
+
+---
+
+
+## ¿Por qué TypeScript?
+
+### Mejora de la experiencia y reducción del costes de desarrollo
+
+<Logo/>
+
+---
+
+### Testeo estático
+
+<Logo/>
+
+---
+
+### Mas fácil de mantener
+
+<Logo/>
+
+---
+
+### Aprovecha mejor las herramientas del IDE
+
+<Logo/>
+
+---
+
+### Añade funcionalidades futuras de JS
+
+- Stage 3 de la TC39
+
+<Logo/>
+
+---
+
+### Crecimiento año tras año
+
+<Logo/>
+
+---
+
+## JSDoc vs TypeScript
+
+<Logo/>
+
