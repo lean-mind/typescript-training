@@ -5,6 +5,9 @@ import {Notes, Appear} from 'mdx-deck'
 import {Logo, JavaScriptRepl} from '../components'
 import tsLogo from '../assets/ts-logo.svg'
 import superset from '../assets/superset.png'
+import trophy from '../assets/trophy.png'
+import rankingChart from '../assets/rankingChart.png'
+import rankingTable from '../assets/rankingTable.JPG'
 
 export const theme = {
   ...defaultTheme,
@@ -30,6 +33,14 @@ export const theme = {
 </Appear>
 
 <Logo/>
+
+<Notes>
+    - Lenguaje tipado
+    - No se puede ejecutar directamente. Se transpila a JS
+    - Se puede ejecutar TS con ts-node que transpila on the fly
+    - Significa que puedes usar JS perfectamente junto con TS
+    - Incluye funcionalidades próximas de JS (esNext)
+</Notes>
 
 ---
 
@@ -62,12 +73,13 @@ function add(x, y) {
   - ¿Qué hace esa función en JS?
 
   - ¿Qué podría recibir de entrada?
-  'a' + 1
-  1 + 'a'
-  1 + 1
-  1 + undefined
-  'a' + undefined
-  true + true
+    - 'a' + 1
+    - 1 + 'a'
+    - 1 + 1
+    - 1 + undefined
+    - 'a' + undefined
+    - true + true
+    - [] + 1
 
   - Ya, pero si TypeScript no funciona en ejecución, ¿cómo evito que me metan un string? Pues usando value objects cuando trabajas con números.
 
@@ -152,8 +164,8 @@ function buildPerson({
 
   - ¿Qué hace esta función?
   - ¿Qué aporta la deconstrucción de parámetros?
-  - ¿Qué ventajas tiene llamar a una función con objetos en lugar de usasr sus parámetros por separado?
-  - ¿Qué pasaría al invocar la función con un objeto con solo el atributo name ?
+  - ¿Qué ventajas tiene llamar a una función con objetos en lugar de usar sus parámetros por separado?
+  - ¿Qué pasaría al invocar la función con un objeto con solo el atributo name?
   - ¿Se puede llamar a la función sin parámetros?
 
 </Notes>
@@ -189,7 +201,8 @@ export interface UseCase<Input, Output> {
 
   - Útil en el desarrollo, no existe/traspila en Javascript
   - Permite definir qué va a realizar un objeto sin saber cómo lo hará
-  - Evita el uso de **any**, tipando los parámetros,
+  - No poner un tipo sería como usar any, por lo tanto aceptaría cualquier tipo de parámetro
+  - Evita el uso de **any**!!!!!!!, tipando
 
 </Notes>
 
@@ -208,20 +221,24 @@ export interface UseCase<Input, Output> {
 <CodeSurfer>
 
 ```typescript
-abstract class CustomerAbstractRepository {
-    read(): Customer[]
+abstract class CustomerAbstractRepository implements CustomerRepository {
+    abstract write(customers: Customer[]): void
+
+    read(): Customer[] {
+        ...read customers
+    }
 }
 ```
 
 ```typescript
 class CustomerRepository extends CustomerAbstractRepository {
-    write() {
+    write(customers: Customer[]): void {
         ...write customers
     }
 }
 
 class CustomerLegacyRepository extends CustomerAbstractRepository {
-    write() {
+    write(customers: Customer[]): void {
         ...write customers at legacy repository
     }
 }
@@ -239,15 +256,15 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 
 ---
 
-
 ## ¿Por qué TypeScript?
 
-### Mejora de la experiencia y reducción del costes de desarrollo
+  - Mejora la experiencia de desarrollo
+  - Más fácil de mantener
+  - Reduce costes
 
 <Notes>
-    - Bien aplicado reduce incertidumbre gracias al tipado y visibilidad de atributos/métodos/funciones
-    - Disminuye el tiempo necesario para tomar el control de código legacy o que hace tiempo que no se toca
-
+  - Bien aplicado reduce incertidumbre gracias al tipado y visibilidad de atributos/métodos/funciones
+  - Disminuye el tiempo necesario para tomar el control de código legacy o que hace tiempo que no se toca
 </Notes>
 
 <Logo/>
@@ -256,16 +273,12 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 
 ### Testeo estático
 
+<img src={trophy} style='height: 70vh'/>
 
 <Notes>
-
+  - Kent C. Dodds
+  - Ejemplo: tsc intro/trophyExample/example.trophyTS.ts
 </Notes>
-
-<Logo/>
-
----
-
-### Mas fácil de mantener
 
 <Logo/>
 
@@ -276,6 +289,7 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 <Notes>
     - Refactorizar código
     - Inline variables
+    - Ejemplo: trophyExample
 </Notes>
 
 <Logo/>
@@ -288,6 +302,10 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 
 <Logo/>
 
+<Notes>
+  - Faltan notas
+</Notes>
+
 ---
 
 ### Crecimiento año tras año
@@ -298,5 +316,8 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 
 ## JSDoc vs TypeScript
 
-<Logo/>
+<Notes>
+  - ¿Qué alternativa elegir cuando estás perdiendo el control de tu código?
+</Notes>
 
+<Logo/>
