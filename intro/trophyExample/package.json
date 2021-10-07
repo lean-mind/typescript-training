@@ -1,0 +1,15 @@
+{
+  "name": "trophyexample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "example.trophyJS.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "tsc example.trophyTS.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.4.3"
+  }
+}
