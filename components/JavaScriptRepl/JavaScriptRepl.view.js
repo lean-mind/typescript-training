@@ -75,8 +75,9 @@ const Tab = styled.div`
 const TerminalContent = styled.div`
   padding: 16px;
   padding-top: 2px;
-  max-height: 680px;
+  height: 680px;
   overflow-y: scroll;
+  width: 1080px;
 `
 
 const renderLine = (line, i) =>
@@ -102,9 +103,7 @@ export const Repl = ({
   const [activeInputValue, setActiveInputValue] = useState("")
   const [historySelectIndex, setHistorySelectIndex] = useState(-1)
   useEffect(() => {
-    if (!terminalContentRef.current) {
-      return
-    } else {
+    if (terminalContentRef.current) {
       terminalContentRef.current.scrollTop = terminalContentRef.current.scrollHeight
     }
   }, [lines])

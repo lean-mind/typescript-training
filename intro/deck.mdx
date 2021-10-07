@@ -1,15 +1,15 @@
 import {CodeSurfer} from "code-surfer";
 import defaultTheme, {highlight} from 'mdx-deck/themes'
-import {Notes} from 'mdx-deck'
+import {Notes, Appear} from 'mdx-deck'
 
 import {Logo, JavaScriptRepl} from '../components'
 import tsLogo from '../assets/ts-logo.svg'
+import superset from '../assets/superset.png'
 
 export const theme = {
   ...defaultTheme,
   ...highlight
 }
-
 
 # Introducción a TypeScript
 
@@ -21,7 +21,13 @@ export const theme = {
 
 ## ¿Qué es TypeScript?
 
+<Appear>
+
 ### Superset de JavaScript
+
+<img src={superset}/>
+
+</Appear>
 
 <Logo/>
 
@@ -48,33 +54,8 @@ function add(x, y) {
 ---
 
 <JavaScriptRepl
-  init={[
-    "const zeroNumber = 1 - 1",
-    "zeroNumber + 1",
-    "Boolean(zeroNumber)",
-    "const zeroString = String(zeroNumber)",
-    "Boolean(zeroString)"
-  ]}
+  title="Sumar en JavaScript"
 />
-
-<Logo/>
-
----
-
-<CodeSurfer>
-
-  ```typescript title="Tipos"
-  function add(x: number, y: number): number {
-  return x + y
-}
-  ```
-
-  ```diff title="Tipos" 1[1:14,25:25,34:34,44],2:3
-  ```
-  ```diff title="Tipos" 1[1:14,25:25,34:34,44],2:3
-  ```
-
-</CodeSurfer>
 
 <Notes>
 
@@ -88,7 +69,30 @@ function add(x, y) {
   'a' + undefined
   true + true
 
+  - Ya, pero si TypeScript no funciona en ejecución, ¿cómo evito que me metan un string? Pues usando value objects cuando trabajas con números.
+
 </Notes>
+
+<Logo/>
+
+---
+
+<CodeSurfer>
+
+```typescript title="Tipos"
+function add(x: number, y: number): number {
+  return x + y
+}
+```
+
+```diff title="Tipos" 1[1:14,25:25,34:34,44],2:3
+```
+```diff title="Tipos" 1[15:24,26:33,35:43]
+```
+```diff title="Tipos" 1[35:43]
+```
+
+</CodeSurfer>
 
 <Logo/>
 
@@ -103,13 +107,13 @@ function add(x, y) {
 
 <CodeSurfer>
 
-  ```typescript title="Tipos avanzados"
-  interface Person {
+```typescript title="Tipos avanzados"
+interface Person {
   id: string
   name: string
   age: number
 }
-  ```
+```
 
 </CodeSurfer>
 
@@ -119,28 +123,28 @@ function add(x, y) {
 
 <CodeSurfer>
 
-  ```typescript title="Tipos avanzados"
-  function buildPerson({
+```typescript title="Tipos avanzados"
+function buildPerson({
   id = '1',
   name = 'Bruce Wayne',
   age = 18
 }: Partial<Person> = {}): Person {
   return {
-  id,
-  name,
-  age
+    id,
+    name,
+    age
+  }
 }
-}
-  ```
+```
 
-  ```diff title="Tipos avanzados" 2:5
-  ```
-
-  ```diff title="Tipos avanzados" 2:5[1:19]
-  ```
-
-  ```diff title="Tipos avanzados" 5[19:23]
-  ```
+```diff title="Tipos avanzados" 2:5
+```
+```diff title="Tipos avanzados" 2:5[1:19]
+```
+```diff title="Tipos avanzados" 5[19:23]
+```
+```diff title="Tipos avanzados" 5[25:32]
+```
 
 </CodeSurfer>
 
@@ -167,15 +171,19 @@ function add(x, y) {
 
 ## Genéricos
 
-```typescript
-    class Lista<T>{
-        private values: Array<T>
-    }
+<CodeSurfer>
 
-    export interface UseCase<Input, Output> {
-        exec(input: Input): Output
-    }
+```typescript
+class Lista<T> {
+    private values: Array<T>
+}
+
+export interface UseCase<Input, Output> {
+    exec(input: Input): Output
+}
 ```
+
+</CodeSurfer>
 
 <Notes>
 
@@ -197,11 +205,15 @@ function add(x, y) {
 
 ## Mejor gestión de la herencia
 
+<CodeSurfer>
+
 ```typescript
 abstract class CustomerAbstractRepository {
     read(): Customer[]
 }
+```
 
+```typescript
 class CustomerRepository extends CustomerAbstractRepository {
     write() {
         ...write customers
@@ -215,10 +227,12 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 }
 ```
 
+</CodeSurfer>
+
 <Notes>
-    - Aprovecha la potencia de objetos
-    - Permite definir una API de comportamiento ocultando comportamiento interno
-    - Facilita compartir código entre entidades
+  - Aprovecha la potencia de objetos
+  - Permite definir una API de comportamiento ocultando comportamiento interno
+  - Facilita compartir código entre entidades
 </Notes>
 
 <Logo/>
@@ -285,4 +299,3 @@ class CustomerLegacyRepository extends CustomerAbstractRepository {
 ## JSDoc vs TypeScript
 
 <Logo/>
-

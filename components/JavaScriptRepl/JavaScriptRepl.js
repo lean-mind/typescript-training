@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useCallback} from "react"
 import Repl from "./JavaScriptRepl.view"
 import prettyFormat from "pretty-format"
 
@@ -48,14 +48,13 @@ function generateREPL() {
 export const JavaScriptRepl = ({
  title = 'REPL',
  loadToScope = [],
- init = [],
- height
+ init = []
 }) => {
   const repl = generateREPL()
-  const initializeLines = () => {
+  const initializeLines = useCallback(() => {
     repl.loadScope(loadToScope)
     return repl.generateLinesFromStrings(init)
-  }
+  }, [loadToScope, init, repl])
   const [lines, setLines] = useState(initializeLines())
   const onClear = () => setLines(initializeLines())
   const onSubmit = async (execLine) => {
@@ -71,7 +70,7 @@ export const JavaScriptRepl = ({
 
   useEffect(() => {
     (initializeLines)()
-  }, [])
+  }, [initializeLines])
   return (
     <Repl
       title={title}
