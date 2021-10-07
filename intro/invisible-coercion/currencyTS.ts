@@ -16,4 +16,8 @@ class Currency extends Number {
   }
 }
 
-console.log(Currency.parseToDiscount(new Currency(2.5)).toEuro())
+console.log(
+  Currency.parseToDiscount(
+    new Currency(2.5)
+  ).toEuro()
+)
