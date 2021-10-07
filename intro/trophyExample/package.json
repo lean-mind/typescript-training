@@ -5,11 +5,14 @@
   "main": "example.trophyJS.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "demo": "tsc example.trophyTS.ts"
+    "demo:js": "node example.trophyJS.js",
+    "demo:ts": "ts-node example.trophyTS.ts",
+    "build": "tsc example.trophyTS.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   }
 }
