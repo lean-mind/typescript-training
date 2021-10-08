@@ -4,7 +4,8 @@
   "scripts": {
     "start:intro": "mdx-deck intro/deck.mdx",
     "start:advanced": "mdx-deck advanced/deck.mdx",
-    "build": "mdx-deck build deck.mdx",
+    "build:intro": "mdx-deck build intro/deck.mdx",
+    "build:advanced": "mdx-deck build advanced/deck.mdx",
     "test": "echo \"there are no tests\""
   },
   "devDependencies": {

@@ -18,6 +18,14 @@ export const theme = {
 <img src={tsLogo}/>
 
 <Logo/>
+<Notes>
+
+  - ¿Han trabajado con lenguajes tipados?
+  - ¿Han usado TS antes?
+  - ¿Qué os parece TS?
+
+</Notes>
+
 
 ---
 
@@ -35,11 +43,11 @@ export const theme = {
 
 <Notes>
 
-  - Lenguaje tipado
   - No se puede ejecutar directamente. Se transpila a JS
   - Se puede ejecutar TS con ts-node que transpila on the fly
   - Significa que puedes usar JS perfectamente junto con TS
-  - Incluye funcionalidades próximas de JS (esNext)
+  - Cada año JS saca nuevas caracteristicas, donde TS se adelanta (esNext)
+  - Lenguaje tipado
 
 </Notes>
 
@@ -136,6 +144,14 @@ interface Person {
 
 <Logo/>
 
+<Notes>
+
+  - ¿Saben lo que es una interfaz?
+  - La firma que va a tener un objeto
+
+</Notes>
+
+
 ---
 
 <CodeSurfer>
@@ -154,9 +170,9 @@ function buildPerson({
 }
 ```
 
-```diff title="Tipos avanzados" 2:5
+```diff title="Tipos avanzados" 1[22],2:4,5[1:18]
 ```
-```diff title="Tipos avanzados" 2:5[1:19]
+```diff title="Tipos avanzados" 5[2:19]
 ```
 ```diff title="Tipos avanzados" 5[19:23]
 ```
@@ -233,23 +249,23 @@ async function getHttp<Result> (url: string): Promise<Result> {
 
 ```typescript title="Mejor gestión de la herencia" 1:7
 abstract class CustomerAbstractRepository {
-    abstract write(customers: Customer[]): Promise<void>
+  abstract write(customers: Customer[]): Promise<void>
 
-    async read(): Promise<Customer[]> {
-        ...read customers
-    }
+  async read(): Promise<Customer[]> {
+    ...read customers
+  }
 }
 
 class CustomerRepository extends CustomerAbstractRepository {
-    async write(customers: Customer[]): Promise<void> {
-        ...write customers
-    }
+  async write(customers: Customer[]): Promise<void> {
+    ...write customers
+  }
 }
 
 class CustomerReadOnlyRepository extends CustomerAbstractRepository {
-    async write(customers: Customer[]): Promise<void> {
-        ...write customers at read only repository
-    }
+  async write(customers: Customer[]): Promise<void> {
+    ...write customers at read only repository
+  }
 }
 ```
 
@@ -259,9 +275,13 @@ class CustomerReadOnlyRepository extends CustomerAbstractRepository {
 </CodeSurfer>
 
 <Notes>
+
+  - ¿Saben que es una clase abstracta?
+  - Es una clase que no se puede instanciar, sólo extender o heredar, de esta manera centralizaríamos funcionalidades
   - Aprovecha la potencia de objetos
   - Permite definir una API de comportamiento ocultando comportamiento interno
   - Facilita compartir código entre entidades
+
 </Notes>
 
 <Logo/>
@@ -276,8 +296,10 @@ class CustomerReadOnlyRepository extends CustomerAbstractRepository {
   - Autodocumenta tu código
 
 <Notes>
+
   - Bien aplicado reduce incertidumbre gracias al tipado y visibilidad de atributos/métodos/funciones
   - Disminuye el tiempo necesario para tomar el control de código legacy o que hace tiempo que no se toca
+
 </Notes>
 
 <Logo/>
@@ -289,8 +311,12 @@ class CustomerReadOnlyRepository extends CustomerAbstractRepository {
 <img src={trophy} style='height: 70vh'/>
 
 <Notes>
-  - Kent C. Dodds
-  - Ejemplo: tsc intro/trophyExample/example.trophyTS.ts
+
+  - En las anteriores formaciones hemos visto los tests unitarios, integración y e2e
+  - La copa de Test de Kent C. Dodds 
+  - Extiende la piramide de test con los testeos estáticos (Mike Cohn)
+  - Ejemplos: trophy e invisible-coercion (en ese orden)
+
 </Notes>
 
 <Logo/>
@@ -299,10 +325,16 @@ class CustomerReadOnlyRepository extends CustomerAbstractRepository {
 
 ### Aprovecha mejor las herramientas del IDE
 
+- Refactor
+- Autocompletado
+
 <Notes>
-    - Refactorizar código
-    - Inline variables
-    - Ejemplo: trophyExample
+
+  - Refactorizar código, también se puede hacer en JS pero es muchísimo menos preciso e inestable
+  - Al estar tipado nos va a sugerir o autocompletar el código que necesitamos, por ejemplo a la hora de deconstruir
+  - Y más cosas que ahora no recuerdo
+  - Ejemplo: autocompletado
+
 </Notes>
 
 <Logo/>
@@ -330,7 +362,7 @@ class CustomerReadOnlyRepository extends CustomerAbstractRepository {
 
 ### Crecimiento año tras año
 
-Encuesta de Stackoverflow a más de 80k desarrolladores
+Encuesta de Stack Overflow a más de 80k desarrolladores
 
 <img src={rankingChart}/>
 
@@ -384,7 +416,14 @@ function Book(title: string, author: string): Book { }
 <Notes>
 
   - ¿Qué alternativa elegir cuando estás perdiendo el control de tu código?
+  - ¿Qué os parece TS?
 
 </Notes>
+
+<Logo/>
+
+---
+
+## Próximamente la parte avanzada
 
 <Logo/>

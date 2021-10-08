@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from "styled-components";
+import styled from 'styled-components'
 import isotype from '../assets/leanmind-isotipo.svg'
 import anagram from '../assets/leanmind-anagrama.svg'
 

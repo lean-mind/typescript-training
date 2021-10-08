@@ -1,5 +1,5 @@
 class Currency extends Number {
-  constructor(value) {
+  constructor(value: number) {
     super(value)
   }
 
