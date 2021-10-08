@@ -7,10 +7,6 @@ class Currency extends Number {
     return -currency
   }
 
-  toDollar() {
-    return `${this.valueOf().toFixed(2)} $`
-  }
-
   toEuro() {
     return `${this.valueOf().toFixed(2)} €`
   }
