@@ -1,48 +1,215 @@
-import {
-  CodeSurfer,
-  CodeSurferColumns,
-  Step,
-} from "code-surfer";
-import { nightOwl } from "@code-surfer/themes";
-import {Logo} from '../components'
+import { CodeSurfer, CodeSurferColumns, Step } from 'code-surfer'
+import { nightOwl } from '@code-surfer/themes'
+import { Logo } from '../components'
+import tsLogo from '../assets/ts-logo.svg'
 
 
+# Introducción a TypeScript (Parte 2)
 
-# Hola! 👋
-
-Estás usando [MDX Deck](https://github.com/jxnblk/mdx-deck) y [Code Surfer](https://codesurfer.pomb.us)
+<img src={tsLogo}/>
 
 <Logo/>
+<Notes>
+
+  - 
+
+</Notes>
 
 ---
 
-<CodeSurfer theme={nightOwl}>
+## Tipos avanzados
 
+<CodeSurfer>
 
-```js showNumbers
-console.log(1);
-console.log(2);
-console.log(3);
-```
+```typescript title="Diferencias entre tipos"
+type Person = {
+  name: string
+  age?: number
+}
 
-```diff 1
-```
+const person: Person = {
+  name: 'Antonio'
+}
 
-```diff 2
-```
+const getInfo = ({ name, age = 18 }: Person) => {
+  return `${name} tiene ${age} años`
+}
 
-```diff 3
+console.log(getInfo(person))
 ```
 
 </CodeSurfer>
 
 <Logo/>
+<Notes>
+
+  - Diferencias entre tipos
+  // Mejorar
+  - Los tipos se definen con dos puntos
+  - La declaración de los objectos se rellenan con dos puntos
+  // ^
+  - Los valores por defecto van con un "igual"
+
+</Notes>
 
 ---
- 
-# Documentación
 
-- [Componentes de MDX Deck](https://github.com/jxnblk/mdx-deck/blob/master/docs/components.md)
-- [Code Surfer](https://codesurfer.pomb.us)
+## Tipos avanzados
+
+### Built-in types
+
+- Definición de tipos
+- any, unknown y never
+- Pipe y Ampersand
+- Generics <T, U>
+- Record<key, value>
+- Partial y Required
+- Pick y Omit
+- keyof
+- enum
 
 <Logo/>
+<Notes>
+
+  - type BasicPrimitive = number | string | boolean
+
+</Notes>
+
+---
+
+## Tipos avanzados
+
+<CodeSurfer>
+
+```typescript title="Interfaces vs Tipos"
+interface Person {
+  name: string
+  age?: number
+}
+
+type Person = {
+  name: string
+  age?: number
+}
+```
+
+</CodeSurfer>
+
+<Logo/>
+<Notes>
+
+  - ¿Cuál tendría más sentido utilizar aquí?
+  - En este caso la interfaz porque no tiene ninguna complejidad
+
+</Notes>
+
+---
+
+## Tipos avanzados
+
+<CodeSurfer>
+
+```typescript title="Interfaces vs Tipos"
+// Código de ejemplo de cuando necesitamos un tipo en vez de una interfaz
+```
+
+</CodeSurfer>
+
+<Logo/>
+<Notes>
+
+  - Toda interfaz puede ser sustituida por un tipo pero no todos los tipos pueden ser sustituidos por una interfaz
+
+</Notes>
+
+---
+
+## Tipados y propiedades de clases
+
+- abstract
+- extends (JS)
+- implements
+- public (por defecto)
+- private
+- protected
+- readonly
+- static (JS)
+
+<Logo/>
+<Notes>
+
+  - TypeScript allows us to mark a class as abstract. This tells TypeScript that the class is only meant to be extended from, and that certain members need to be filled in by any subclass to actually create an instance.
+
+</Notes>
+
+---
+
+## Proyecto
+
+### Primeros pasos
+
+1. Inicializar Proyecto
+    - `> npm init`
+    - `> npm init -y`
+1. Instalar Typescript
+    - `> npm install typescript --save-dev`
+1. Inicializar configuración de Typescript
+    - `> tsc init`
+1. Añadir y configurar test runner
+    1. `> npm install jest @types/jest ts-jest --save-dev`
+    1. `> jest init`
+
+<Logo/>
+<Notes>
+
+  - Quizás mencionar algo más de tsconfig?
+  - Quizás mencionar algo de tsconfig para prod y para dev?
+
+</Notes>
+
+---
+
+## Proyecto
+
+### Build
+
+```
+> build
+> src
+> tests
+```
+
+<Logo/>
+<Notes>
+
+  - No entrar en detalles de SOLID!!
+
+</Notes>
+
+---
+
+## Testing
+
+<Logo/>
+<Notes>
+
+  1. Tests con TypeScript y Jest
+      1. Poner dibujo: copa de tests
+      2. describe / it  
+      3. Helpers: repaso builders / expects por clases
+  1. jest.config.json
+      2. Explicar un fichero de ejemplo
+      3. setupTests.ts
+
+</Notes>
+
+---
+
+## De JS a TS
+
+<Logo/>
+<Notes>
+
+  - Entender como si JS y TS no fueran compatibles, aunque si puedan serlo
+
+</Notes>
