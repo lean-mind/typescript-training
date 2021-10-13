@@ -1,5 +1,4 @@
-import { CodeSurfer, CodeSurferColumns, Step } from 'code-surfer'
-import { nightOwl } from '@code-surfer/themes'
+import { CodeSurfer } from 'code-surfer'
 import { Logo } from '../components'
 import tsLogo from '../assets/ts-logo.svg'
 
@@ -11,17 +10,15 @@ import tsLogo from '../assets/ts-logo.svg'
 <Logo/>
 <Notes>
 
-  - 
+  -
 
 </Notes>
 
 ---
 
-## Tipos avanzados
-
 <CodeSurfer>
 
-```typescript title="Diferencias entre tipos"
+```ts title="Diferencias entre tipos y valores"
 type Person = {
   name: string
   age?: number
@@ -30,8 +27,11 @@ type Person = {
 const person: Person = {
   name: 'Antonio'
 }
+```
 
-const getInfo = ({ name, age = 18 }: Person) => {
+
+```ts title="Diferencias entre tipos"
+function getInfo ({ name, age = 18 }: Person): string {
   return `${name} tiene ${age} años`
 }
 
@@ -54,19 +54,37 @@ console.log(getInfo(person))
 
 ---
 
-## Tipos avanzados
+## Tipos básicos
 
-### Built-in types
+  - string
+  - number
+  - bigint
+  - boolean
+  - symbol
+  - void
+  - null
+  - undefined
 
-- Definición de tipos
-- any, unknown y never
-- Pipe y Ampersand
-- Generics <T, U>
-- Record<key, value>
-- Partial y Required
-- Pick y Omit
-- keyof
-- enum
+<Logo/>
+
+<Notes>
+
+  - Todos los tipos en TypeScript se crean en base a los tipos primitivos. Por eso son primitivos ;)
+
+</Notes>
+
+---
+  ## Tipos básicos
+
+  - Tipos literales
+  - Funciones (`() => void`)
+  - Array (`Array<> | []`)
+  - Tupla
+  - Enum
+  - object (Mejor no usarlo)
+  - any: Me da igual lo que venga (Preferiblemente no usarlo. Hay una configuración en tsconfig para evitar que se use)
+  - unknown: No sé qué es lo que viene, así que tendré que comprobar qué es antes de usarlo. Usado sobre todo cuando trabajamos con código de terceros que no está tipado.
+  - ❓️ [never](https://www.typescriptlang.org/docs/handbook/basic-types.html#never): es el tipo que se pone a funciones o métodos que van a devolver un error siempre.
 
 <Logo/>
 <Notes>
@@ -77,11 +95,44 @@ console.log(getInfo(person))
 
 ---
 
+## Tipos básicos
+
+- Definición de tipos
+- Union Type (|) e Intersection Type (&)
+
+<Logo/>
+<Notes>
+
+  - type BasicPrimitive = number | string | boolean
+
+</Notes>
+
+---
+## Tipos avanzados
+
+### Built-in types
+
+- Generics <T, U>
+- Record<key, value>
+- Partial y Required
+- Pick y Omit
+- keyof
+- Type Assertions
+
+<Logo/>
+<Notes>
+
+  -
+
+</Notes>
+
+---
+
 ## Tipos avanzados
 
 <CodeSurfer>
 
-```typescript title="Interfaces vs Tipos"
+```ts title="Interfaces vs Tipos"
 interface Person {
   name: string
   age?: number
@@ -109,7 +160,7 @@ type Person = {
 
 <CodeSurfer>
 
-```typescript title="Interfaces vs Tipos"
+```ts title="Interfaces vs Tipos"
 // Código de ejemplo de cuando necesitamos un tipo en vez de una interfaz
 ```
 
@@ -124,7 +175,7 @@ type Person = {
 
 ---
 
-## Tipados y propiedades de clases
+## Tipado y propiedades de clases
 
 - abstract
 - extends (JS)
@@ -195,7 +246,7 @@ type Person = {
 
   1. Tests con TypeScript y Jest
       1. Poner dibujo: copa de tests
-      2. describe / it  
+      2. describe / it
       3. Helpers: repaso builders / expects por clases
   1. jest.config.json
       2. Explicar un fichero de ejemplo
@@ -213,3 +264,10 @@ type Person = {
   - Entender como si JS y TS no fueran compatibles, aunque si puedan serlo
 
 </Notes>
+
+---
+
+## Recursos
+
+- [Tipos básicos en TypeScript](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+- [Utility Types en TypeScript](https://www.typescriptlang.org/docs/handbook/utility-types.html)
