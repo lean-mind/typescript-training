@@ -54,7 +54,7 @@ console.log(getInfo(person))
 
 ---
 
-## Tipos básicos
+## Tipos básicos (1/3)
 
   - string
   - number
@@ -70,11 +70,20 @@ console.log(getInfo(person))
 <Notes>
 
   - Todos los tipos en TypeScript se crean en base a los tipos primitivos. Por eso son primitivos ;)
+  - number vs bigint
+  - bigint: 64bits. 9.007.199.254.740.991. Upcoming proposal in ECMAScript that allow us to model theoretically arbitrarily large integers
+  - No se pueden mezclar number con bigint. Hay que convertir antes
+  - perdida de procesión al convertir a number
+  - TODO: Symbol: Starting with ECMAScript 2015, symbol is a primitive data type, just like number and string
+  -    únicos inmutables, pueden ser utilizados para identificar propiedades de los objetos
+  - void: no data.
+  - null (cero en operaciones matemáticas)
+  - undefined: optional parameters not undefined
 
 </Notes>
 
 ---
-  ## Tipos básicos
+  ## Tipos básicos (2/3)
 
   - Tipos literales
   - Funciones (`() => void`)
@@ -82,47 +91,189 @@ console.log(getInfo(person))
   - Tupla
   - Enum
   - object (Mejor no usarlo)
+  - any
+  - unknown
+
+<Logo/>
+<Notes>
+
+  - Tipos literales: type foo = 'Agua' | 'Tierra' | 'Fuego' | 'Aire'
+  - Funciones: Se declara de forma similar a las funciones flecha
+  - Array: repeticion de elementos, de cualquier tipo ya definido, o implícito [{name: 'a'}]
+  - Tupla: defines a priori el tipo de los elementos. No se puede acceder a índices que no se han definido
+  - TODO: Ej: Tupla
   - any: Me da igual lo que venga (Preferiblemente no usarlo. Hay una configuración en tsconfig para evitar que se use)
-  - unknown: No sé qué es lo que viene, así que tendré que comprobar qué es antes de usarlo. Usado sobre todo cuando trabajamos con código de terceros que no está tipado.
+  - No sé qué es lo que viene, así que tendré que comprobar qué es antes de usarlo. Usado sobre todo cuando trabajamos con código de terceros que no está tipado.
   - ❓️ [never](https://www.typescriptlang.org/docs/handbook/basic-types.html#never): es el tipo que se pone a funciones o métodos que van a devolver un error siempre.
 
+</Notes>
+
+---
+
+## Tipos básicos (3/3)
+
+
+<CodeSurfer>
+
+  ```typescript title="Reutilización de tipos"
+  type Developer {
+    name: string
+    language: Languages
+  }
+  ```
+
+  ```typescript title="Union Type (|)"
+  type NIF: number | string
+  ```
+
+  ```typescript title="Intersection Type (&)"
+  type Languages = 'typescript' | 'bash' | 'sql'
+  type Person = { name: string }
+  type Technologies = { language: Languages[] }
+  type developer = Person & Language
+  ```
+
+</CodeSurfer>
+
 <Logo/>
+
 <Notes>
 
+  - Union type: puede tomar valores de cualquiera de los tipos
+  - solo se pueden usar métodos comunes (toUpperCase)
+  - Intersection Type: es la suma de todos sus atributos
   - type BasicPrimitive = number | string | boolean
+  - TODO: Ejemplos
 
 </Notes>
 
 ---
 
-## Tipos básicos
-
-- Definición de tipos
-- Union Type (|) e Intersection Type (&)
-
-<Logo/>
-<Notes>
-
-  - type BasicPrimitive = number | string | boolean
-
-</Notes>
-
----
 ## Tipos avanzados
 
 ### Built-in types
 
-- Generics <T, U>
-- Record<key, value>
-- Partial y Required
-- Pick y Omit
-- keyof
-- Type Assertions
+<CodeSurfer>
+
+```typescript title="Generics <T, U>"
+class Invoice<T> {
+  add(T)
+}
+```
+
+```typescript title="Record <key, value>"
+    enum Level { Entry, Middle, Top, TenX }
+    type Expertise = Record<Languages, Level>
+    const expertise = { 'sql': Level.Entry }
+    expertise['sql']
+```
+
+```typescript title="Partial"
+    type HumanDeveloper {
+      name: string,
+      language: Languages[],
+      age: number,
+      pokemonScore: number
+    }
+
+    type Person = Partial<HumanDeveloper>
+```
+
+```typescript title="Required"
+    type HumanDeveloper = {
+      name?: string,
+      language?: Languages[],
+      age?: number,
+      pokemonScore?: number
+    }
+    type Person = Required<HumanDeveloper>
+    const person: Person = {
+      name: 'Juan',
+      language: ['sql'],
+      age: 18,
+      pokemonScore: 100
+    }
+
+```
+
+```typescript title="Pick"
+  type HumanDeveloper = {
+    name?: string,
+    language?: Languages[],
+    age?: number,
+    pokemonScore?: number
+  }
+
+type Person = Required<HumanDeveloper>
+
+type Gamer = Pick<Person, 'name' | 'pokemonScore'>
+
+```
+
+```typescript title="Omit"
+  type HumanDeveloper = {
+    name?: string,
+    language?: Languages[],
+    age?: number,
+    pokemonScore?: number
+  }
+
+type Person = Omit<HumanDeveloper, 'language' | 'pokemonScore'>
+
+const person: Person = { name: 'Juan', age: '25' }
+```
+
+```typescript title="Omit (corregido)"
+  type HumanDeveloper = {
+    name?: string,
+    language?: Languages[],
+    age?: number,
+    pokemonScore?: number
+  }
+
+  type Person = Omit<HumanDeveloper, 'language' | 'pokemonScore'>
+
+  const person: Person = { name: 'Juan', age: 25 }
+```
+
+```typescript title="keyof"
+  type HumanDeveloper = {
+    name?: string,
+    language?: Languages[],
+    age?: number,
+    pokemonScore?: number
+  }
+
+  type foo = keyof HumanDeveloper
+```
+
+```typescript title="Type assertions"
+  const foo = <HumanDeveloper>{
+    name: 'Segismundo',
+    age: 25,
+    pokemonScore: 0,
+    clashOfClansScore: 100
+  }
+  foo.pokemonScore = 0
+  foo.classOfClansScore = -1
+
+```
+
+</CodeSurfer>
 
 <Logo/>
+
 <Notes>
 
-  -
+  - Generics <T, U>
+  - Record<key, value>
+  - Partial y Required
+  - Pick y Omit
+  - keyof
+  - Type Assertions
+  - Diferencia entre Partial y Required
+  - Error en Omit
+  - TODO: Type assertions
 
 </Notes>
 
@@ -144,24 +295,32 @@ type Person = {
 }
 ```
 
-</CodeSurfer>
-
-<Logo/>
-<Notes>
-
-  - ¿Cuál tendría más sentido utilizar aquí?
-  - En este caso la interfaz porque no tiene ninguna complejidad
-
-</Notes>
-
----
-
-## Tipos avanzados
-
-<CodeSurfer>
-
 ```ts title="Interfaces vs Tipos"
-// Código de ejemplo de cuando necesitamos un tipo en vez de una interfaz
+  interface HumanDeveloper {
+    name: string
+    age: number
+  }
+  interface HumanDeveloper {
+    languages: Languages[]
+    pokemonScore: number
+  }
+
+  type Human = {
+    name: string
+    age: number
+  }
+
+  type Developer = {
+    languages: Languages[]
+  }
+
+  type Gamer = {
+    pokemonScore: number
+  }
+
+  type HumanDeveloper = Human & Developer & Gamer
+
+
 ```
 
 </CodeSurfer>
@@ -169,7 +328,13 @@ type Person = {
 <Logo/>
 <Notes>
 
-  - Toda interfaz puede ser sustituida por un tipo pero no todos los tipos pueden ser sustituidos por una interfaz
+  - TODO: Toda interfaz puede ser sustituida por un tipo pero no todos los tipos pueden ser sustituidos por una interfaz
+  - ¿Cuál tendría más sentido utilizar aquí?
+  - En este caso la interfaz porque no tiene ninguna complejidad
+  - Diferencias en cómo se extienden (lo hemos visto antes)
+  - ¿Qué pasa si se define dos tipos con la misma palabra? ¿Y dos interfaces?
+  - Interfaz se puede extender y aumentar
+  - Tipos: alias, uno u otro, concatenar (interfaces también de otra forma)
 
 </Notes>
 
@@ -177,7 +342,6 @@ type Person = {
 
 ## Tipado y propiedades de clases
 
-- abstract
 - extends (JS)
 - implements
 - public (por defecto)
@@ -185,11 +349,148 @@ type Person = {
 - protected
 - readonly
 - static (JS)
+- abstract
+
+<CodeSurfer>
+
+```js title="extends (JS)"
+class Person {
+  name: string
+}
+
+class Developer extends Person {
+  language: Languages[]
+}
+```
+
+```js title="implements"
+  interface HumanDeveloper {
+    name: string
+    age: number
+    languages: Languages[]
+    pokemonScore: number
+  }
+
+  class Person implements HumanDeveloper {
+    age: number
+    languages: Languages[]
+    name: string
+    pokemonScore: number
+  }
+```
+
+```js title="public"
+  class Person implements HumanDeveloper {
+    age: number
+    languages: Languages[]
+    name: string
+    pokemonScore: number
+  }
+
+  class AwesomePerson implements HumanDeveloper {
+    public age: number
+    public languages: Languages[]
+    public name: string
+    public pokemonScore: number
+  }
+```
+
+```js title="private"
+  class Person implements HumanDeveloper {
+    age: number
+    languages: Languages[]
+    name: string
+    pokemonScore: number
+  }
+
+  class AwesomePerson implements HumanDeveloper {
+    age: number
+    languages: Languages[]
+    name: string
+    private pokemonScore: number
+  }
+```
+
+```js title="protected"
+  class Person implements HumanDeveloper {
+    age: number
+    name: string
+    private pokemonScore: number
+  }
+
+  class BoredPerson extends Person {
+    ...
+  }
+
+  class AwesomePerson implements HumanDeveloper {
+    age: number
+    name: string
+    protected pokemonScore: number
+  }
+
+  class BussyPerson extends AwesomePerson {
+     ...
+  }
+```
+
+
+```js title="readonly"
+class Person implements HumanDeveloper {
+    age: number
+    readonly languages: Languages[]
+    readonly name: string
+    pokemonScore: number
+}
+
+const foo: Person = new Person()
+    foo.age =1
+foo.name = 'Felipe'
+```
+
+```js title="static (JS)"
+class Person implements HumanDeveloper {
+    static human: boolean = true
+    age: number
+    languages: Languages[]
+    name: string
+    pokemonScore: number
+}
+```
+
+
+```js title="abstract"
+abstract class Person {
+    name: string
+
+    protected speak(text: string) {
+      console.log(text)
+    }
+
+    abstract play(seconds: number): void
+}
+
+class Developer extends Person {
+  play(seconds: number) {
+    setTimeout(() => this.speak('Hello World!'), seconds)
+  }
+}
+
+const ego: Developer = new Developer()
+
+ego.play(1000)
+```
+
+
+
+</CodeSurfer>
+
 
 <Logo/>
 <Notes>
 
   - TypeScript allows us to mark a class as abstract. This tells TypeScript that the class is only meant to be extended from, and that certain members need to be filled in by any subclass to actually create an instance.
+  - extends: ¿les suena de otro lenguage?
+  - TODO: Comentar Michael/Ulises readonly array
 
 </Notes>
 
