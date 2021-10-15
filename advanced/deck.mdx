@@ -47,10 +47,9 @@ console.log(getInfo(person))
 <Notes>
 
   - Diferencias entre tipos
-  // Mejorar
+  - Tipo y valor
   - Los tipos se definen con dos puntos
   - La declaración de los objectos se rellenan con dos puntos
-  // ^
   - Los valores por defecto van con un "igual"
 
 </Notes>
@@ -72,7 +71,7 @@ console.log(getInfo(person))
   const age: number
 ```
 
-```ts title="bigint (es2020)"
+```ts title="bigint"
   const euros: bigint
 ```
 
@@ -90,12 +89,13 @@ console.log(getInfo(person))
   }
 ```
 
-```ts title="undefined (JS)"
-  const irrelevant = undefined
+```ts title="undefined"
+  let irrelevant
+  // undefined
 ```
 
-```ts title="null (JS)"
-  const sqlReference: null = null
+```ts title="null"
+  const sqlReference = null
 
   // tsconfig: strictNullChecks
 ```
@@ -108,10 +108,10 @@ console.log(getInfo(person))
 
   - Todos los tipos en TypeScript se crean en base a los tipos primitivos. Por eso son primitivos ;)
   - number vs bigint
-  - bigint: 64bits. 9.007.199.254.740.991. Upcoming proposal in ECMAScript that allow us to model theoretically arbitrarily large integers
+  - bigint. es2020: 64bits. 9.007.199.254.740.991. Upcoming proposal in ECMAScript that allow us to model theoretically arbitrarily large integers
   - No se pueden mezclar number con bigint. Hay que convertir antes
   - perdida de procesión al convertir a number
-  - TODO: Symbol: Starting with ECMAScript 2015, symbol is a primitive data type, just like number and string
+  - Symbol: Starting with ECMAScript 2015, symbol is a primitive data type, just like number and string
   -    únicos inmutables, pueden ser utilizados para identificar propiedades de los objetos
   - void: no data.
   - null (cero en operaciones matemáticas)
@@ -192,13 +192,32 @@ enum Level {
   TenX = 'really?'
 }
 ```
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
 
 ```ts title="object"
-  const developer: { name: string, age: number } = { name: 'Segismundo', age: 69 }
+const developer: object = {
+  name: 'Segismundo',
+  age: 69
+}
 ```
 
-```ts title="¿Por qué no es una buena práctica?"
-  const developer: { name: string, age: number } = { name: 'Segismundo', age: 69 }
+```ts title="¿Por qué no es una buena práctica?" 1:12
+const developer: object = {
+  name: 'Segismundo',
+  age: 69
+}
+
+const developer: {
+  name: string,
+  age: number
+} = {
+  name: 'Segismundo',
+  age: 69
+}
 ```
 
 ```ts title="any"
@@ -244,7 +263,7 @@ enum Level {
 type Developer = {
   name: string
   age: number
-  language: Language
+  languages: Language
 }
 ```
 
@@ -252,11 +271,11 @@ type Developer = {
 ```
 
 ```typescript title="Union Type (|)"
-type NIF: number | string
+type NIF = number | string
 ```
 
 ```typescript title="Union Type (|)"
-type NIF: number | string
+type NIF = number | string
 
 const onePerson: NIF = '12345678'
 const anotherPerson: NIF = 12345678
@@ -266,21 +285,19 @@ const anotherPerson: NIF = 12345678
 ```typescript title="Intersection Type (&)"
 type Language = 'typescript' | 'bash' | 'sql'
 type Person = { name: string }
-type Technologies = { language: Language[] }
+type Technologies = { languages: Language[] }
 
 type developer = Person & Technologies
 ```
 
-```diff title="Intersection Type (&)" 5
-```
 
 ```typescript title="Ejemplo" 5,6
 type Language = 'typescript' | 'bash' | 'sql'
 type Person = { name: string }
-type Technologies = { language: Language[] }
+type Technologies = { languages: Language[] }
 
 type Developer = Person & Technologies
-const developer: Developer = {name: 'Segismundo', language: ['sql']}
+const developer: Developer = {name: 'Segismundo', languages: ['sql']}
 ```
 
 </CodeSurfer>
@@ -289,11 +306,11 @@ const developer: Developer = {name: 'Segismundo', language: ['sql']}
 
 <Notes>
 
+  - Combinar
   - Union type: puede tomar valores de cualquiera de los tipos
   - solo se pueden usar métodos comunes (toUpperCase)
   - Intersection Type: es la suma de todos sus atributos
   - type BasicPrimitive = number | string | boolean
-  - TODO: Ejemplos
 
 </Notes>
 
@@ -315,17 +332,20 @@ const developer: Developer = {name: 'Segismundo', language: ['sql']}
 
 ```typescript title="Generics <T, U>"
 class Invoice<T> {
-  add(T)
+
+  add(parameter: T): void {
+    ...
+  }
 }
 ```
 
-```typescript title="Record <key, value>" 1:6
+```typescript title="Record <key, value>" 1:7
 type Language = 'typescript' | 'bash' | 'sql'
 enum Level { Entry, Middle, Top, TenX }
-type Expertise = Record<Languages, Level>
-const expertise = { 'sql': Level.Entry }
+type Expertise = Record<Language, Level>
+const expertise: Expertise = { sql: Level.Entry }
 
-expertise['sql']
+console.log(expertise.sql)
 ```
 
 ```typescript title="Partial" 1:8
@@ -333,7 +353,7 @@ type HumanDeveloper = {
   name: string
   languages: Language[]
   age: number
-  pokemonScore: number
+  pokemonScore?: number
 }
 
 type Person = Partial<HumanDeveloper>
@@ -344,24 +364,29 @@ type Person = {
   age?: number
   pokemonScore?: number
 }
+
+const person: Person = { name: 'Segismindo' }
 ```
 
-```diff title="Resultado de aplicar Partial" 10:15
+```diff title="Resultado de aplicar Partial" 8:17
 ```
+
+
+
 
 ```typescript title="Required" 1:9
 type HumanDeveloper = {
   name?: string
   languages?: Language[]
   age?: number
-  pokemonScore?: number
+  pokemonScore: number
 }
 
 type Person = Required<HumanDeveloper>
 
 const person: Person = {
   name: 'Juan',
-  language: ['sql'],
+  languages: [],
   age: 18,
   pokemonScore: 100
 }
@@ -375,7 +400,7 @@ const person: Person = {
     name?: string,
     language?: Language[],
     age?: number,
-    pokemonScore?: number
+    pokemonScore: number
   }
 
 type Person = Required<HumanDeveloper>
@@ -386,63 +411,42 @@ type Gamer = Pick<Person, 'name' | 'pokemonScore'>
 ```typescript title="Omit" 1:10
   type HumanDeveloper = {
     name: string,
-    language: Language[],
+    languages: Language[],
     age: number,
     pokemonScore: number
   }
 
 type Person = Omit<HumanDeveloper, 'language' | 'pokemonScore'>
 
-const person: Person = { name: 'Juan', age: '25' }
-```
-
-```typescript title="Omit (corregido)" 1:10
-type HumanDeveloper = {
-  name: string,
-  language: Language[],
-  age: number,
-  pokemonScore: number
-}
-
-type Person = Omit<HumanDeveloper, 'language' | 'pokemonScore'>
-
 const person: Person = { name: 'Juan', age: 25 }
 ```
 
-```typescript title="keyof" 1:8
+```typescript title="keyof" 1:10
+type Concept = { p1: number, p2: number, p3: number }
+type Period = keyof Concept
+
+
+function getValue(period: Period): number {
+  const secretValues: Concept = { p1: 10, p2: 20, p3: 30 }
+
+  return secretValues[period]
+}
+
+```
+
+```typescript title="Type assertions"
 type HumanDeveloper = {
   name: string,
-  language: Language[],
+  languages: Language[],
   age: number,
   pokemonScore: number
 }
 
-type foo = keyof HumanDeveloper
-```
-
-```typescript title="Type assertions" 1:13
-type HumanDeveloper = {
-  name: string,
-  language: Language[],
-  age: number,
-  pokemonScore: number
+function assertion({ name }: HumanDeveloper) {
+  ...
 }
 
-const foo = <HumanDeveloper>{
-  name: 'Segismundo',
-  age: 25,
-  pokemonScore: 0,
-  clashOfClansScore: 100
-}
-
-foo.pokemonScore = 0
-foo.classOfClansScore = -1
-```
-
-```diff title="Type assertions" 1:13,15[1:17]
-```
-
-```diff title="Type assertions" 1:13,16[1:22]
+assertion({ name: 'Segismundo' } as HumanDeveloper)
 ```
 
 </CodeSurfer>
@@ -452,14 +456,12 @@ foo.classOfClansScore = -1
 <Notes>
 
   - Generics <T, U>
-  - Record<key, value>
+  - Record<key, value>: objeto plano con clave y valor
   - Partial y Required
   - Pick y Omit
   - keyof
   - Type Assertions
   - Diferencia entre Partial y Required
-  - Error en Omit
-  - TODO: Type assertions
 
 </Notes>
 
@@ -471,7 +473,7 @@ foo.classOfClansScore = -1
 
 <CodeSurfer>
 
-```ts title="Interfaces vs tipos 1/3"
+```ts title="Interfaces vs tipos"
 interface Person {
   name: string
   age?: number
@@ -483,37 +485,7 @@ type Person = {
 }
 ```
 
-```ts title="Interfaces vs tipos 2/3"
-  interface HumanDeveloper {
-    name: string
-    age: number
-  }
-
-  interface HumanDeveloper {
-    languages: Language[]
-    pokemonScore: number
-  }
-```
-
-```ts title="Interfaces vs tipos 3/3"
-  type Human = {
-    name: string
-    age: number
-  }
-
-  type Developer = {
-    languages: Language[]
-  }
-
-  type Gamer = {
-    pokemonScore: number
-  }
-
-  type HumanDeveloper = Human & Developer & Gamer
-```
-
 </CodeSurfer>
-
 
 <Logo/>
 
@@ -546,152 +518,105 @@ type Person = {
 
 <CodeSurfer>
 
+
+```js title="public" 1:4
+class Person {
+  public age: number
+  public name: string
+}
+```
+
+```diff title="public" 2[3:9],3[3:9]
+```
+
+```js title="public"
+class Person {
+  age: number
+  name: string
+}
+```
+
+
+```js title="private" 1:10
+class Person {
+  age: number =  18
+  name: string = 'Segismundo'
+  private pokemonScore: number = 0
+
+  constructor() { ... }
+}
+
+const person: Person = new Person()
+person.pokemonScore = 1000000 🔴
+```
+
+
 ```js title="extends (JS)"
 class Person {
   name: string
 }
 
 class Developer extends Person {
-  language: Language[]
+  languages: Language[]
 }
 ```
 
 ```diff title="extends (JS)" 5[17:24]
 ```
 
-
-```js title="implements" 1:13
-interface HumanDeveloper {
-  name: string
-  age: number
-  languages: Language[]
-  pokemonScore: number
-}
-
-class Person implements HumanDeveloper {
-  age: number
-  languages: Language[]
-  name: string
-  pokemonScore: number
-}
-```
-
-```diff title="implements" 8[14:24]
-```
-
-
-```js title="public" 1:13
-class Person implements HumanDeveloper {
-  age: number
-  languages: Language[]
-  name: string
-  pokemonScore: number
-}
-
-class AwesomePerson implements HumanDeveloper {
-  public age: number
-  public languages: Language[]
-  public name: string
-  public pokemonScore: number
-}
-```
-
-```diff title="public" 9[3:9],10[3:9],11[3:9],12[3:9]
-```
-
-```js title="public"
-class Person implements HumanDeveloper {
-  age: number
-  languages: Language[]
-  name: string
-  pokemonScore: number
-}
-
-class AwesomePerson implements HumanDeveloper {
-  age: number
-  languages: Language[]
-  name: string
-  pokemonScore: number
-}
-```
-
-
-```js title="private" 1:6
-class Person {
-  age: number
-  languages: Language[]
-  name: string
-  pokemonScore: number
-}
-
+```js title="protected" 1:15
 class AwesomePerson {
-  age: number
-  languages: Language[]
-  name: string
-  private pokemonScore: number
-}
-
-const person: AwesomePerson = new AwesomePerson()
-person.pokemonScore = 1000000
-```
-
-```diff title="private" 8:13
-```
-
-```diff title="private" 14:16
-```
-
-```js title="protected" 1:11
-class Person {
-  age: number
-  name: string
-  private pokemonScore: number
-}
-
-class BoredPerson extends Person {
-  hackScore() {
-    this.pokemonScore = 1000000
-  }
-}
-
-class AwesomePerson {
-  age: number
-  name: string
-  protected pokemonScore: number
+  private age: number =  18
+  private name: string = 'Segismundo'
+  protected pokemonScore: number = 0
 }
 
 class BusyPerson extends AwesomePerson {
+  constructor() {
+    super()
+  }
+
   hackScore() {
     this.pokemonScore = 1000000
   }
 }
 ```
 
-```diff title="protected" 4[3:10],7[18:25],9
-```
-
-```diff title="protected" 16[3:12],19[18:25],21
-```
-
-
 ```ts title="readonly"
-class Person implements HumanDeveloper {
-  age: number
-  readonly languages: Language[]
-  readonly name: string
-  pokemonScore: number
+class Person {
+  age: number = 69
+  readonly name: string = 'Segismundo'
+  pokemonScore: number = 0
 }
 
-const foo: Person = new Person()
-foo.age =1
-foo.name = 'Felipe'
+const person: Person = new Person()
+person.age = 1
+person.name = 'Felipe' 🔴
 ```
 
-```diff title="readonly" 3[3:11],4[3:11]
+
+```js title="implements" 1:18
+interface Person {
+  name: string
+  age: number
+  pokemonScore: number
+  live: () => void
+}
+
+class HumanDeveloper implements Person {
+  constructor(
+    readonly age: number,
+    readonly languages: Language[],
+    readonly name: string,
+    readonly pokemonScore: number
+  ) { }
+
+  live(): void { ... }
+  code(): void { ... }
+
+}
 ```
 
-```diff title="readonly" 9,10
-```
 
 ```typescript title="static (JS)" 1:7
 class Person implements HumanDeveloper {
@@ -719,30 +644,35 @@ Person.human
 
 <CodeSurfer>
 
-```ts title="abstract" 1:7
+```ts title="abstract"
 abstract class Person {
   name: string
 
   protected speak(text: string) { console.log(text) }
 
-  abstract sayHello(seconds: number): void
+  abstract sayHello(): void
 }
 
-class Developer extends Person {
-  sayHello(seconds: number) {
-    setTimeout(() => this.speak('Hello World!'), seconds)
+class EnglishMan extends Person {
+  sayHello(): void {
+    this.speak('Hello World!')
   }
 }
 
-const developer: Developer = new Developer()
-
-developer.sayHello(1000)
+const englishMan: EnglishMan = new EnglishMan()
+englishMan.sayHello()
 ```
 
-```diff title="abstract: definicion y método abstracto" 1[1:9],6
-```
+```ts title="abstract"
 
-```diff title="abstract: implementación de la clase abstracta" 6,8:17
+class SpanishMan extends Person {
+  sayHello(): void {
+    this.speak('Hola mundo!')
+  }
+}
+
+const spanishMan: SpanishMan = new SpanishMan()
+spanishMan.sayHello()
 ```
 
 </CodeSurfer>
@@ -773,7 +703,7 @@ developer.sayHello(1000)
 1. Inicializar configuración de Typescript
     - `> tsc --init`
 1. Añadir y configurar test runner
-    1. `> npm install jest @types/jest ts-jest --save-dev`
+    1. `> npm install jest @types/jest ts-jest ts-node --save-dev`
     1. `> jest --init`
 
 <Logo/>
