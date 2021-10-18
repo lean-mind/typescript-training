@@ -1,0 +1,117 @@
+import {CodeSurfer} from "code-surfer";
+import defaultTheme, {highlight} from 'mdx-deck/themes'
+import {Notes, Appear} from 'mdx-deck'
+
+import {Logo, JavaScriptRepl} from '../components'
+import tsLogo from '../assets/ts-logo.svg'
+import superset from '../assets/superset.png'
+import trophy from '../assets/trophy.png'
+import rankingChart from '../assets/rankingChart.png'
+
+export const theme = {
+  ...defaultTheme,
+  ...highlight
+}
+
+# Instalación TypeScript
+
+<img src={tsLogo}/>
+
+<Logo/>
+
+---
+
+# Instalación TypeScript
+
+1. Inicializar Proyecto
+    - `> npm init`
+    - `> npm init -y`
+1. Instalar Typescript
+    - `> npm install typescript --save-dev`
+1. Inicializar configuración de Typescript
+    - `> tsc --init`
+1. Añadir y configurar test runner
+    1. `> npm install jest @types/jest ts-jest ts-node --save-dev`
+    1. `> jest --init`
+
+<Logo/>
+
+<Notes>
+
+  - Quizás mencionar algo más de tsconfig?
+  - Quizás mencionar algo de tsconfig para prod y para dev?
+
+</Notes>
+
+---
+
+## Proyecto: Build
+
+```
+> build
+> src
+> tests
+```
+
+<Logo/>
+
+<Notes>
+
+  - No entrar en detalles de SOLID!!
+
+</Notes>
+
+---
+
+## Testing
+
+<CodeSurfer>
+
+```typescript title="Ejemplo"
+  class Calculator {
+    sum(a: number, b: number): number {
+      return a + b
+    }
+  }
+
+  describe('Calculator should', () => {
+    it('sum', () => {
+      expect(Calculator.sum(2, 2)).tobe(4)
+    })
+  })
+```
+
+</CodeSurfer>
+
+---
+
+## Testing
+
+<CodeSurfer>
+
+  ```json title="Ejemplo de jest.config.json"
+  {
+    "roots": ["<rootDir>/test"],
+    "testMatch": ["**/__tests__/**/*.+(ts|js)", "**/?(*.)+(spec|test).+(ts|js)"],
+    "transform": {
+    "^.+\\.(ts)?$": "ts-jest"
+  },
+    "setupFilesAfterEnv": ["<rootDir>/test/setupTests.ts"]
+  }
+  ```
+
+</CodeSurfer>
+
+<Logo/>
+
+<Notes>
+
+  1. Tests con TypeScript y Jest
+  1. Poner dibujo: copa de tests
+  2. describe / it
+  3. Helpers: repaso builders / expects por clases
+  1. jest.config.json
+  2. Explicar un fichero de ejemplo
+  3. setupTests.ts
+
+</Notes>

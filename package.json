@@ -4,8 +4,12 @@
   "scripts": {
     "start:intro": "mdx-deck intro/deck.mdx",
     "start:advanced": "mdx-deck advanced/deck.mdx",
+    "start:installation": "mdx-deck installation/deck.mdx",
+    "start:kata": "mdx-deck kata/deck.mdx",
     "build:intro": "mdx-deck build intro/deck.mdx",
     "build:advanced": "mdx-deck build advanced/deck.mdx",
+    "build:installation": "mdx-deck build installation/deck.mdx",
+    "build:kata": "mdx-deck build kata/deck.mdx",
     "test": "echo \"there are no tests\""
   },
   "devDependencies": {
