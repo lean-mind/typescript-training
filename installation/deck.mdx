@@ -1,19 +1,16 @@
 import {CodeSurfer} from "code-surfer";
 import defaultTheme, {highlight} from 'mdx-deck/themes'
 import {Notes, Appear} from 'mdx-deck'
-
 import {Logo, JavaScriptRepl} from '../components'
 import tsLogo from '../assets/ts-logo.svg'
-import superset from '../assets/superset.png'
-import trophy from '../assets/trophy.png'
-import rankingChart from '../assets/rankingChart.png'
+import tdd from '../assets/tdd.jpg'
 
 export const theme = {
   ...defaultTheme,
   ...highlight
 }
 
-# Instalación TypeScript
+# Desarrollo con TypeScript
 
 <img src={tsLogo}/>
 
@@ -21,84 +18,55 @@ export const theme = {
 
 ---
 
-# Instalación TypeScript
+## Inicializar Proyecto NPM
 
-1. Inicializar Proyecto
-    - `> npm init`
-    - `> npm init -y`
-1. Instalar Typescript
-    - `> npm install typescript --save-dev`
-1. Inicializar configuración de Typescript
-    - `> tsc --init`
-1. Añadir y configurar test runner
-    1. `> npm install jest @types/jest ts-jest ts-node --save-dev`
-    1. `> jest --init`
+- `> npm init`
+- `> npm init -y`
 
 <Logo/>
 
-<Notes>
-
-  - Quizás mencionar algo más de tsconfig?
-  - Quizás mencionar algo de tsconfig para prod y para dev?
-
-</Notes>
-
 ---
 
-## Proyecto: Build
+## Instalar Typescript
 
-```
-> build
-> src
-> tests
-```
+`> npm install typescript --save-dev`
 
 <Logo/>
 
-<Notes>
+---
 
-  - No entrar en detalles de SOLID!!
+## Inicializar configuración de Typescript
 
-</Notes>
+`> tsc --init`
+
+<Logo/>
 
 ---
 
-## Testing
+## Añadir y configurar test runner
 
-<CodeSurfer>
+1. `> npm install jest @types/jest ts-jest ts-node --save-dev`
+1. `> jest --init`
 
-```typescript title="Ejemplo"
-  class Calculator {
-    sum(a: number, b: number): number {
-      return a + b
-    }
-  }
-
-  describe('Calculator should', () => {
-    it('sum', () => {
-      expect(Calculator.sum(2, 2)).tobe(4)
-    })
-  })
-```
-
-</CodeSurfer>
+<Logo/>
 
 ---
 
-## Testing
-
 <CodeSurfer>
 
-  ```json title="Ejemplo de jest.config.json"
+```json title="Ejemplo de jest.config.json"
   {
     "roots": ["<rootDir>/test"],
     "testMatch": ["**/__tests__/**/*.+(ts|js)", "**/?(*.)+(spec|test).+(ts|js)"],
     "transform": {
-    "^.+\\.(ts)?$": "ts-jest"
-  },
+      "^.+\\.(ts)?$": "ts-jest"
+    },
     "setupFilesAfterEnv": ["<rootDir>/test/setupTests.ts"]
   }
-  ```
+```
+
+```diff 7
+```
 
 </CodeSurfer>
 
@@ -108,10 +76,68 @@ export const theme = {
 
   1. Tests con TypeScript y Jest
   1. Poner dibujo: copa de tests
-  2. describe / it
-  3. Helpers: repaso builders / expects por clases
+  1. describe / it
+  1. Helpers: repaso builders / expects por clases
   1. jest.config.json
-  2. Explicar un fichero de ejemplo
-  3. setupTests.ts
+  1. Explicar un fichero de ejemplo
+  1. setupTests.ts
+
+</Notes>
+
+---
+
+## Transpilación
+
+<Logo/>
+
+<Notes>
+
+  - No entrar en detalles de SOLID!!
+  - ¿?
+
+</Notes>
+
+---
+
+<CodeSurfer>
+
+```typescript title="Testing"
+  class Calculator {
+    static sum(a: number, b: number): number {
+      return a + b
+    }
+  }
+
+  describe('Calculator should', () => {
+    it('sum', () => {
+      expect(Calculator.sum(2, 2)).toBe(4)
+    })
+  })
+```
+
+```diff 1:5
+```
+```diff 7:11
+```
+```diff 8:10
+```
+```diff 9 
+```
+
+</CodeSurfer>
+
+---
+
+## Ciclo del TDD
+
+<img src={tdd}/>
+
+<Logo/>
+
+<Notes>
+
+  - Rojo: Escribes el test para que dé en rojo (o esperando a que dé en rojo)
+  - Verde: Implementas el caso en especifico para que dé en verde, manteniendo los casos anteriores en verde
+  - Refactor: Le das más legibilidad, más entendible, más lógico...
 
 </Notes>
